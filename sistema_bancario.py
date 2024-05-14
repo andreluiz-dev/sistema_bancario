@@ -1,4 +1,6 @@
-menu = """
+import ContaManagment as cm
+
+menu = ("""
 
 Selecione a opção da operação desejada:
 [1] Depositar
@@ -6,61 +8,23 @@ Selecione a opção da operação desejada:
 [3] Extrato
 [4] Sair
 
-"""
+""")
 
-saldo = 0
-limite = 500
-extrato = ""
-numero_saques = 0
-LIMITE_SAQUES = 3
 
-while True:
-
-    opcao = menu
-
-    if opcao == "1":
-        valor = float(input("Digite o valor do depósito: "))
-
-        if valor == 0: 
-            saldo+=valor
-            extrato += f"Deposito: R$ {valor:.2f}\n"
+if __name__ == "__main__":
+    # Exemplo de uso da classe ContaBancaria
+    conta = cm.ContaBancaria("Fulano", 1000, 500)
+    while(1):
+        opcao = input(menu)
+        if opcao == "1":
+            valor = float(input("Digite o valor do depósito: "))
+            conta.depositar(valor)
+        elif opcao == "2":
+            valor = float(input("Digite o valor do saque: "))
+            conta.sacar(valor)
+        elif opcao == "3":
+            conta.extrato()
+        elif opcao == "4":
+            break
         else:
-            print("Operação falhou! O valor informado é inválido.")
-    
-    elif opcao == "2":
-        valor = float(input("Digite o valor do saque: "))
-
-        excedeu_saldo = valor > saldo
-
-        excedeu_limite = valor > limite
-
-        excedeu_saques = numero_saques >= LIMITE_SAQUES
-        
-        if excedeu_saldo:
-            print("Operação falhou! Saldo insuficiente.")
-        
-        elif excedeu_limite:
-            print("Operação Falhou! Valor do saque excedeu o limite.")
-
-        elif excedeu_saques:
-            print("Operação Falhou! Limite de saques excedido.")
-
-        elif valor > 0:
-            saldo += valor
-            extrato += f"Saque: R${valor:.2f}"
-            numero_saques += 1
-        
-        else:
-            print("Operação falhou! Valor inválido.")
-    
-    elif opcao == "3":
-        print("\n ######## EXTRATO ########")
-        print("Não foram realizadas movimentações." if not extrato else extrato)
-        print(f"\n Saldo: R$ {saldo:.2f}")
-        print("#################################")
-
-    elif opcao == "4":
-        break
-
-    else:
-        print("Opção Inválida, por favor selecione novamente a operação desejada.")
+            print("Opção Inválida, por favor selecione novamente a operação desejada.")
